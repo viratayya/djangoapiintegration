@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+
+
+
+{% block container %}
+<div class="jumbotron row">
+{% for each in posts %}
+
+<div class="col-md-4 mb-5">
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="card-title">{{ each.title }}</h2>
+        <p class="card-text">{{each.body}}</p>
+      </div>
+      <div class="card-footer">
+        <a href="{{each.id}}/" class="btn btn-primary btn-sm">More Info</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+</div>
+{% endblock %}
+
+{% load static %}
+{% block javascripcontainer %}
+
+{% endblock %}

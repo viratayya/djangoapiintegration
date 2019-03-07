@@ -1,0 +1,38 @@
+version: '3'
+services:
+  basicweb:
+    container_name: basicweb
+    build: ./docker/nginx
+    ports:
+      - 8007:80
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /etc/nginx
+    links:
+      - basicpython
+  basicpython:
+    container_name: basicpython
+    build: ./docker/python
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - basicmysql
+
+  basicmysql:
+    build: docker/mysql
+    container_name: basicmysql
+    ports:
+      - 8306:3306
+    volumes:
+      - data-volume:/var/lib/mysql
+      - ./mysqldata:/root
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=django
+    healthcheck:
+      test: "exit 0"
+  
+
+volumes:
+  data-volume:
